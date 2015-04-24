@@ -28,12 +28,12 @@ app.controller('LoginCtrl', [
   }
 ]);
 
-app.factory('login', ['$http', function($http){
+app.factory('login', ['$http', '$window', function($http, $window){
   var o = {};
 
   o.login = function(user) {
     return $http.post('/login', user).success(function(data) {
-      console.log(data);
+      $window.location.href = '/home';
     });
   };
 
