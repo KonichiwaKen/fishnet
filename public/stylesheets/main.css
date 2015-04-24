@@ -1,0 +1,10 @@
+#eventbutton {
+	position: fixed;
+	bottom: 24px;
+	right: 26px;
+}
+
+.glyphicon {
+	font-size: 50px;
+	color: black;
+}
