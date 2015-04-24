@@ -16,5 +16,6 @@ POST    /login						controllers.LoginController.attemptLogin()
 GET		/logout						controllers.LoginController.logout()
 
 # Events
+DELETE	/event						controllers.EventController.deleteEvent()
 GET		/events						controllers.EventController.getEvents()
 POST	/events						controllers.EventController.createEvent()

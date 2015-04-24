@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
 import com.google.gson.Gson;
@@ -44,6 +46,21 @@ public class EventController extends Controller {
 		String eventsJson = new Gson().toJson(userEvents);
 		
 		return ok(eventsJson);
+	}
+	
+	public static Result deleteEvent() {
+		String eventId = request().getQueryString("eventId");
+		Datastore ds = MorphiaObject.datastore;
+		
+		Query<Event> eventQuery = ds.createQuery(Event.class)
+				.filter("_id", new ObjectId(eventId));
+		Event deletedEvent = ds.findAndDelete(eventQuery);
+		
+		if (deletedEvent != null) {
+			return ok();
+		} else {
+			return badRequest();
+		}
 	}
 
 }
