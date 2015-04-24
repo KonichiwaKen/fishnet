@@ -14,7 +14,6 @@ public class LoginController extends Controller {
 	
 	public static Result index() {
 		return ok(index.render());
-
 	}
 
 	public static Result attemptLogin() {
