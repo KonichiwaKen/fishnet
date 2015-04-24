@@ -2,20 +2,26 @@ package controllers;
 
 import models.User;
 import play.data.Form;
+import play.Logger;
+import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
-import views.html.badRequest;
 
-public class SignupController extends UserController{
+public class SignupController extends Controller {
 	
-	// TODO: Return ok?
 	public static Result createUser() {
 		Form<User> userForm = new Form<User>(User.class);
 		User user = userForm.bindFromRequest().get();
-		if (saveToDatabase(user)) {
-			return ok(index.render());
+		
+		Logger.debug(user.email);
+		Logger.debug(user.firstName);
+		Logger.debug(user.lastName);
+		Logger.debug(user.password);
+		
+		if (UserController.saveToDatabase(user)) {
+			return ok();
 		} else {
-			return badRequest(badRequest.render());
+			return badRequest();
 		}
 	}
+	
 }

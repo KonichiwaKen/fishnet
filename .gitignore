@@ -18,3 +18,9 @@ project/activator-sbt-echo-shim.sbt
 project/activator-sbt-eclipse-shim.sbt
 project/activator-sbt-idea-shim.sbt
 /bin/
+/.sbtserver
+.DS_STORE
+project/.sbtserver
+project/.sbtserver.lock
+project/play-fork-run.sbt
+project/sbt-ui.sbt

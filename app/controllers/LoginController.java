@@ -1,15 +1,17 @@
 package controllers;
 
-import static play.data.Form.form;
 import models.User;
 import models.utils.AppException;
-import play.*;
+
+import play.Logger;
 import play.data.Form;
-import play.i18n.Messages;
-import play.mvc.*;
-import views.html.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+import views.html.index;
 
 public class LoginController extends Controller {
+	
 	public static Result index() {
 		return ok(index.render());
 
@@ -23,21 +25,22 @@ public class LoginController extends Controller {
 		String password = user.password;
 
 		User attemptedUser = null;
+		
 		try {
-			attemptedUser = User.authenticate(email, password);
+			attemptedUser = UserController.authenticate(email, password);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		//Login was successful
 		if (attemptedUser != null ) {
-			flash("Login Success! ", Messages.get(""));
-			return ok(index.render());
+			session("id", attemptedUser.id);
+			return ok();
 		} else {
 			Logger.debug("Incorrect username or password");
 		}
 
-		return badRequest(index.render());
+		return badRequest();
 	}
+	
 }

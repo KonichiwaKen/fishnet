@@ -1,31 +1,29 @@
 app = angular.module('playCal', []);
 
-app.controller('HomeCtrl', [
+app.controller('LoginCtrl', [
   '$scope',
   'login',
   function($scope, login) {
+    $scope.view = false;
+
     $scope.login = function() {
       login.login({
         email: $scope.email,
         password: $scope.password
       });
-
-      $scope.email = '';
-      $scope.password = '';
     }
 
     $scope.register = function() {
+      console.log($scope.email);
+      console.log($scope.password);
+      console.log($scope.firstName);
+      console.log($scope.lastName);
       login.register({
         email: $scope.email,
         password: $scope.password,
         firstName: $scope.firstName,
         lastName: $scope.lastName
       });
-
-      $scope.email = '';
-      $scope.password = '';
-      $scope.firstName = '';
-      $scope.lastName = '';
     }
   }
 ]);

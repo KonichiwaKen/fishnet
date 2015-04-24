@@ -1,21 +1,15 @@
 package models.utils;
 
-/**
- * Created by ntenisOT on 16/10/14.
- */
-
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
-import models.*;
+import java.net.UnknownHostException;
+
+import models.User;
 
 import org.mongodb.morphia.Morphia;
 
 import play.Logger;
-import play.Play;
-
-import java.net.UnknownHostException;
 
 public final class MongoDB {
 
@@ -28,42 +22,32 @@ public final class MongoDB {
         String _mongoURI = "mongodb://127.0.0.1:27017";
 
         MongoClientURI mongoURI = new MongoClientURI(_mongoURI);
-        MongoClient mongoClient = null;
-		try {
-			mongoClient = new MongoClient(mongoURI);
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
         MorphiaObject.mongo = null;
 
         try {
             MorphiaObject.mongo = new MongoClient(mongoURI);
-        }
-        catch(UnknownHostException e) {
+        } catch(UnknownHostException e) {
             Logger.info("Unknown Host");
         }
 
         if (MorphiaObject.mongo != null) {
             MorphiaObject.morphia = new Morphia();
-            DB database = mongoClient.getDB("playcal");
-            MorphiaObject.datastore = MorphiaObject.morphia.createDatastore(MorphiaObject.mongo, "playcal");
+            MorphiaObject.datastore = MorphiaObject.morphia
+            		.createDatastore(MorphiaObject.mongo, "fishnet");
             
 
             //Map classes
-
             MorphiaObject.morphia.map(User.class);
-            
 
             MorphiaObject.datastore.ensureIndexes();
             MorphiaObject.datastore.ensureCaps();
         }
 
-        Logger.debug("** Morphia datastore: " + MorphiaObject.datastore.getDB());
+        Logger.debug("Morphia datastore: " + MorphiaObject.datastore.getDB());
 
         return true;
     }
-
 
     /**
      * Disconnect from MongoDB.
@@ -78,5 +62,5 @@ public final class MongoDB {
         MorphiaObject.mongo.close();
         return true;
     }
+    
 }
-
