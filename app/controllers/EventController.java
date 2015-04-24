@@ -1,5 +1,11 @@
 package controllers;
 
+import java.util.List;
+
+import org.mongodb.morphia.query.Query;
+
+import com.google.gson.Gson;
+
 import models.Event;
 import models.utils.MorphiaObject;
 import play.data.Form;
@@ -27,6 +33,17 @@ public class EventController extends Controller {
 	public static String saveToDatabase(Event event) {
 		String eventId = MorphiaObject.datastore.save(event).getId().toString();
 		return eventId;
+	}
+	
+	public static Result getEvents() {
+		String currentUser = session().get("id");
+		
+		Query<Event> eventQuery =  MorphiaObject.datastore.createQuery(Event.class)
+				.field("owner").equal(currentUser);
+		List<Event> userEvents = eventQuery.asList();
+		String eventsJson = new Gson().toJson(userEvents);
+		
+		return ok(eventsJson);
 	}
 
 }

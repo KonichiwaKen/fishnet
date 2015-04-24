@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.LoginController.index()
+GET     /                           controllers.ViewController.loginPage()
 GET     /home                       controllers.ViewController.homePage()
 
 
@@ -15,4 +15,5 @@ POST	/register					controllers.SignupController.createUser()
 POST    /login						controllers.LoginController.attemptLogin()
 
 # Events
+GET		/events						controllers.EventController.getEvents()
 POST	/events						controllers.EventController.createEvent()

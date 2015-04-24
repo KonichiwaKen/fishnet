@@ -8,13 +8,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import views.html.index;
-
 public class LoginController extends Controller {
-	
-	public static Result index() {
-		return ok(index.render());
-	}
 
 	public static Result attemptLogin() {
 		Form<User> userForm = new Form<User>(User.class);

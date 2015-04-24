@@ -4,6 +4,8 @@ app.controller('HomeCtrl', [
   '$scope',
   'events',
   function($scope, events) {
+    events.getEvents();
+
     $scope.addEvent = function() {
       events.addEvent({
         title: $scope.title,
@@ -22,6 +24,12 @@ app.factory('events', ['$http', '$window', function($http, $window) {
   o.addEvent = function(event) {
     $http.post('/events', event);
   };
+
+  o.getEvents = function() {
+    $http.get('/events').success(function(data) {
+      console.log(data);
+    })
+  }
 
   return o;
 }]);

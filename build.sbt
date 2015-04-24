@@ -15,7 +15,8 @@ libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "2.12.2",
   "org.mongodb.morphia" % "morphia" % "0.108",
   "org.mongodb.morphia" % "morphia-logging-slf4j" % "0.108",
-  "org.mongodb.morphia" % "morphia-validation" % "0.108"
+  "org.mongodb.morphia" % "morphia-validation" % "0.108",
+  "com.google.code.gson" % "gson" % "2.3.1"
 )
 
 resolvers ++= Seq(
