@@ -16,6 +16,7 @@ public class Event {
 	public String description;
 	public String startTime;
 	public String endTime;
+	public String location;
 	public boolean isPublic;
 	public List<String> invitedUsers;
 	public List<String> acceptedUsers;

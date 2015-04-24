@@ -10,6 +10,7 @@ app.controller('HomeCtrl', [
       events.addEvent({
         title: $scope.title,
         description: $scope.description,
+        location: $scope.location,
         startTime: $scope.startTime,
         endTime: $scope.endTime,
         isPublic: $scope.isPublic
