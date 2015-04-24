@@ -12,11 +12,6 @@ public class SignupController extends Controller {
 		Form<User> userForm = new Form<User>(User.class);
 		User user = userForm.bindFromRequest().get();
 		
-		Logger.debug(user.email);
-		Logger.debug(user.firstName);
-		Logger.debug(user.lastName);
-		Logger.debug(user.password);
-		
 		if (UserController.saveToDatabase(user)) {
 			return ok();
 		} else {
