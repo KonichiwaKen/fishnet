@@ -15,6 +15,13 @@ app.controller('HomeCtrl', [
         endTime: $scope.endTime,
         isPublic: $scope.isPublic
       });
+
+      $scope.title = '';
+      $scope.description = '';
+      $scope.location = '';
+      $scope.startTime = '';
+      $scope.endTime = '';
+      $scope.isPublic = false;
     }
   }
 ]);
