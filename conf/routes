@@ -14,6 +14,7 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 POST	/register					controllers.SignupController.createUser()
 POST    /login						controllers.LoginController.attemptLogin()
 GET		/logout						controllers.LoginController.logout()
+GET		/profile					controllers.ViewController.profilePage()
 
 # Events
 DELETE	/event						controllers.EventController.deleteEvent()

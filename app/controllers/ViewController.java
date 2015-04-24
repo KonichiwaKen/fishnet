@@ -5,6 +5,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.home;
 import views.html.index;
+import views.html.profile;
 import models.User;
 
 public class ViewController extends Controller {
@@ -31,5 +32,14 @@ public class ViewController extends Controller {
 		User user = UserController.getUserById(userId);
 		
 		return ok(home.render(user));
+	}
+	
+	public static Result profilePage() {
+		String userId = session().get("id");
+		User user = UserController.getUserById(userId);
+		String profileUserId = request().getQueryString("user");
+		User profileUser = UserController.getUserById(profileUserId);
+		
+		return ok(profile.render(user, profileUser));
 	}
 }
