@@ -2,7 +2,6 @@ package controllers;
 
 import models.User;
 import models.utils.AppException;
-
 import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
@@ -34,6 +33,18 @@ public class LoginController extends Controller {
 		}
 
 		return badRequest();
+	}
+	
+	/**
+	 * Logs out of a user. It does this by clearing the cookie and redirecting
+	 * to the login page.
+	 * 
+	 * @return
+	 */
+	public static Result logout() {
+		session().clear();
+
+		return redirect(routes.ViewController.loginPage());
 	}
 	
 }

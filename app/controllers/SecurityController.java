@@ -20,9 +20,9 @@ public class SecurityController extends Security.Authenticator {
 	 * authenticator will block the request, and instead invoke onUnathorized,
 	 * which we have implemented to redirect to our login screen (index).
 	 */
-//    @Override
-//    public Result onUnauthorized(Context ctx) {
-//       return redirect(views.LoginController.index());
-//    }
+    @Override
+    public Result onUnauthorized(Context ctx) {
+       return redirect(routes.ViewController.loginPage());
+    }
     
 }

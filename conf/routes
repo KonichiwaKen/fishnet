@@ -13,6 +13,7 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 # Users
 POST	/register					controllers.SignupController.createUser()
 POST    /login						controllers.LoginController.attemptLogin()
+GET		/logout						controllers.LoginController.logout()
 
 # Events
 GET		/events						controllers.EventController.getEvents()
