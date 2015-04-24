@@ -17,7 +17,7 @@ app.controller('HomeCtrl', [
   }
 ]);
 
-app.factory('events', ['$http', '$window', function($http, $window){
+app.factory('events', ['$http', '$window', function($http, $window) {
   var o = {};
 
   o.addEvent = function(event) {
