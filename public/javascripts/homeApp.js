@@ -14,10 +14,6 @@ app.controller('LoginCtrl', [
     }
 
     $scope.register = function() {
-      console.log($scope.email);
-      console.log($scope.password);
-      console.log($scope.firstName);
-      console.log($scope.lastName);
       login.register({
         email: $scope.email,
         password: $scope.password,
