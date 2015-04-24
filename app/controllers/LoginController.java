@@ -24,9 +24,6 @@ public class LoginController extends Controller {
 		String email = user.email;
 		String password = user.password;
 		
-		Logger.debug(email);
-		Logger.debug(password);
-		
 		User attemptedUser = null;
 		
 		try {
