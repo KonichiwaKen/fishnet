@@ -36,7 +36,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@user.firstName @user.lastName<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="">@user.email</a></li>
+              <li><a href="/profile?user=@user.id">@user.email</a></li>
               <li class="divider"></li>
               <li><a href="@routes.LoginController.logout()">Logout</a></li>
             </ul>
@@ -61,7 +61,7 @@
             </button>
           </div>
 
-          <div ng-show="friendStatus=='NOT_FRIENDS'">
+          <div ng-show="friendStatus=='NOT_FRIENDS' && '@profileUser.id' != '@user.id'">
             <button class="btn btn-primary" ng-click="addFriend('@profileUser.id')">
               Add friend
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
