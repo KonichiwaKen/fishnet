@@ -2,8 +2,10 @@ package models;
 
 import models.utils.RequestStatus;
 
+import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
+@Entity("FriendRequests")
 public class FriendRequest {
 	
 	@Id
@@ -11,6 +13,8 @@ public class FriendRequest {
 	public String requester;
 	public String requestee;
 	public RequestStatus status;
+	
+	public FriendRequest() {}
 	
 	public FriendRequest(String requester, String requestee) {
 		this.requester = requester;

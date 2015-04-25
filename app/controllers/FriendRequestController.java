@@ -7,6 +7,7 @@ import org.mongodb.morphia.query.UpdateOperations;
 import models.FriendRequest;
 import models.utils.MorphiaObject;
 import models.utils.RequestStatus;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -14,7 +15,7 @@ public class FriendRequestController extends Controller {
 	
 	public static Result createRequest() {
 		String userId = session().get("id");
-		String profileUserId = request().getQueryString("user");
+		String profileUserId = request().body().asJson().get("user").asText();
 		
 		if (checkFriendRequest(userId, profileUserId) != null) {
 			return badRequest();

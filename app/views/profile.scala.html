@@ -62,7 +62,7 @@
           </div>
 
           <div ng-show="friendStatus=='NOT_FRIENDS'">
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" ng-click="addFriend('@profileUser.id')">
               Add friend
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>

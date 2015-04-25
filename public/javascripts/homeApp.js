@@ -34,7 +34,9 @@ app.factory('events', ['$http', '$window', function($http, $window) {
 
 
   o.addEvent = function(event) {
-    $http.post('/events', event);
+    return $http.post('/events', event).error(function(data) {
+      alert('Error creating event');
+    });
   };
 
   o.getEvents = function() {
@@ -85,4 +87,3 @@ app.factory('events', ['$http', '$window', function($http, $window) {
 
 
 
- 
