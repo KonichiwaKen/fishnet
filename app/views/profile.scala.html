@@ -53,6 +53,41 @@
           <div class="jumbotron text-center">
             <h1>@profileUser.firstName @profileUser.lastName</h1>
           </div>
+
+          <div ng-show="friendStatus=='FRIENDS'">
+            <button class="btn btn-success">
+              Friends
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div ng-show="friendStatus=='NOT_FRIENDS'">
+            <button class="btn btn-primary">
+              Add friend
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div ng-show="friendStatus=='REQUEST_SENT'">
+            <button class="btn btn-primary">
+              Pending friend request
+              <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div ng-show="friendStatus=='REQUEST_RECEIVED'">
+            <button class="btn btn-primary">
+              Friend request received
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div ng-show="friendStatus=='REQUEST_DECLINED'">
+            <button class="btn btn-danger">
+              Rejected friend request
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
