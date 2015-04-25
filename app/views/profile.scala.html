@@ -11,6 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="@routes.Assets.at("javascripts/profileApp.js")" type="text/javascript"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
   </head>
 
   <nav class="navbar navbar-default">
@@ -26,7 +27,6 @@
 
         <a class="navbar-brand" href="/home">FishNet</a>
       </div>
-
       <div class="collapse navbar-collapse" id="navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="/home">Event feed</a></li>
@@ -47,6 +47,7 @@
   </nav>
 
   <body ng-app="fishNet" ng-controller="ProfileCtrl" ng-init="init('@json')">
+
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -94,5 +95,108 @@
           </div>
         </div>
       </div>
+     
+      <div class="row">
+        <div class="col-md-6">
+          <div class="text-center">
+            <h1>Events Hosting</h1>
+          </div><br>
+
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+            <div ng-repeat="eventHosting in eventsHosting | orderBy:'startTime'">
+              <div class="panel panel-primary">
+                <a data-toggle="collapse" data-parent="#accordion" href="#{{eventHosting.id}}" aria-expanded="false" aria-controls="{{eventHosting.id}}">
+                  <div class="panel-heading" role="tab" id="EventHosting">
+                      <h2 class="panel-title">
+                          {{eventHosting.title}}
+                      </h2>
+                  </div>
+                </a>
+                <div id="{{eventHosting.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{eventHosting.id}}">
+                  <div class="panel-body">
+                    <div class="list-group">
+                       <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                           Description
+                        </h4>
+                        <p class="list-group-item-text">
+                           {{eventHosting.description}}
+                        </p>
+                       </a>
+                       <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                           Time
+                        </h4>
+                        <p class="list-group-item-text">
+                           {{eventHosting.startTimeDisplay}} to {{eventHosting.endTime}}
+                        </p>
+                       </a>
+                       <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                           Location
+                        </h4>
+                        <p class="list-group-item-text">
+                           {{eventHosting.location}}
+                        </p>
+                       </a>
+                    </div>
+                  </div>
+                </div>
+              </div></br></br>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="text-center">
+            <h1>Events Attending</h1>
+          </div><br>
+
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+            <div ng-repeat="eventAttending in eventsAttending | orderBy:'startTime'">
+              <div class="panel panel-primary">
+                <a data-toggle="collapse" data-parent="#accordion" href="#{{eventAttending.id}}" aria-expanded="false" aria-controls="{{eventAttending.id}}">
+                  <div class="panel-heading" role="tab" id="EventHosting">
+                      <h2 class="panel-title">
+                          {{eventAttending.title}}
+                      </h2>
+                  </div>
+                </a>
+                <div id="{{eventAttending.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{eventAttending.id}}">
+                  <div class="panel-body">
+                    <div class="list-group">
+                       <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                           Description
+                        </h4>
+                        <p class="list-group-item-text">
+                           {{eventAttending.description}}
+                        </p>
+                       </a>
+                       <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                           Time
+                        </h4>
+                        <p class="list-group-item-text">
+                           {{eventAttending.startTimeDisplay}} to {{eventAttending.endTime}}
+                        </p>
+                       </a>
+                       <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                           Location
+                        </h4>
+                        <p class="list-group-item-text">
+                           {{eventAttending.location}}
+                        </p>
+                       </a>
+                    </div>
+                  </div>
+                </div>
+              </div></br></br>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
   </body>

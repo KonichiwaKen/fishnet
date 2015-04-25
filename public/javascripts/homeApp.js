@@ -44,7 +44,7 @@ app.factory('events', ['$http', '$window', function($http, $window) {
       o.events.push.apply(o.events, angular.fromJson(data));
       // loop = (o.events);
       for(var i=0; i<o.events.length;i++){
-        o.events[i].startTime = convertDate(o.events[i].startTime);
+        o.events[i].startTimeDisplay = convertDate(o.events[i].startTime);
         o.events[i].endTime = convertDate(o.events[i].endTime);
       }
     })
