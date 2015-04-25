@@ -20,3 +20,8 @@ GET		/profile					controllers.ViewController.profilePage()
 DELETE	/event						controllers.EventController.deleteEvent()
 GET		/events						controllers.EventController.getEvents()
 POST	/events						controllers.EventController.createEvent()
+
+# Friend requests
+POST	/friendRequest/create		controllers.FriendRequestController.createRequest()
+POST	/friendRequest/accept		controllers.FriendRequestController.acceptRequest()
+POST	/friendRequest/decline		controllers.FriendRequestController.declineRequest()

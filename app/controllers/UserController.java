@@ -85,7 +85,7 @@ public class UserController extends Controller {
     
 	public static User getUserById(String id) {
 		return MorphiaObject.datastore.createQuery(User.class)
-				.filter("id", new ObjectId(id)).get();
+				.filter("_id", new ObjectId(id)).get();
 	}
 	
 	public static User getUserByEmail(String email) {

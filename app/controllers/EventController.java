@@ -20,9 +20,12 @@ public class EventController extends Controller {
 		Form<Event> eventForm = new Form<Event>(Event.class);
 		Event event = eventForm.bindFromRequest().get();
 		event.setOwner(session().get("id"));
-		saveToDatabase(event);
 		
-		return ok();
+		if(saveToDatabase(event) != null) {
+			return ok();
+		} else {
+			return badRequest();
+		}
 	}
 	
 	/***
