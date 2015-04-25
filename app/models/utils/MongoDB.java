@@ -5,9 +5,11 @@ import com.mongodb.MongoClientURI;
 
 import java.net.UnknownHostException;
 
+import models.Event;
 import models.User;
 
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.mapping.MapperOptions;
 
 import play.Logger;
 
@@ -39,6 +41,7 @@ public final class MongoDB {
 
             //Map classes
             MorphiaObject.morphia.map(User.class);
+            MorphiaObject.morphia.map(Event.class);
 
             MorphiaObject.datastore.ensureIndexes();
             MorphiaObject.datastore.ensureCaps();

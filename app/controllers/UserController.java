@@ -1,11 +1,19 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import models.Event;
 import models.User;
+import models.FriendRequest;
 import models.utils.AppException;
+import models.utils.FriendStatus;
 import models.utils.Hash;
 import models.utils.MorphiaObject;
+import models.utils.RequestStatus;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.query.Query;
 
 import play.mvc.Controller;
 
@@ -83,6 +91,12 @@ public class UserController extends Controller {
 				.filter("email", email).get();
 	}
 	
+	public static FriendRequest getFriendRequest(String requester, String requestee) {
+		return MorphiaObject.datastore.createQuery(FriendRequest.class)
+				.filter("requester", requester).filter("requestee", requestee)
+				.get();
+	}
+	
 	/***
 	 * Queries database for the user... Front end will pass the user that is
 	 * currently logged in by the SecuredClass request.username() (cookies).
@@ -101,13 +115,123 @@ public class UserController extends Controller {
 			throws AppException { 
 		User currentUser = getUserByEmail(userEmail);
 		if(currentUser == null){
-			throw new AppException("User does not exist in DataBase");
+			throw new AppException("User does not exist in Database");
 			
 		}
 		
 		currentUser.password = Hash.createPassword(newPass);
 		MorphiaObject.datastore.save(currentUser);
 		return true;
+	}
+
+	/**
+	 * Checks for the friend status between two users
+	 * 
+	 * @param user		  The current user
+	 * @param profileUser The user to check friend status with
+	 * @return			  The friend status between the two users
+	 */
+	public static FriendStatus getFriendStatus(String user, String profileUser) {
+		FriendRequest userRequester = getFriendRequest(user, profileUser);
+		FriendRequest userRequestee = getFriendRequest(profileUser, user);
+		
+		if (userRequester != null) {
+			if (userRequester.getStatus() == RequestStatus.ACCEPTED) {
+				return FriendStatus.FRIENDS;
+			} else {
+				return FriendStatus.REQUEST_SENT;
+			}
+		} else if (userRequestee != null) {
+			if (userRequestee.getStatus() == RequestStatus.ACCEPTED) {
+				return FriendStatus.FRIENDS;
+			} else if (userRequestee.getStatus() == RequestStatus.PENDING) {
+				return FriendStatus.REQUEST_RECEIVED;
+			} else {
+				return FriendStatus.REQUEST_DECLINED;
+			}
+		} else {
+			return FriendStatus.NOT_FRIENDS;
+		}
+	}
+
+	public static List<Event> publicEventsAttending(String userId) {
+		List<Event> publicEvents = new ArrayList<Event>();
+		
+		Query<Event> eventQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("acceptedUsers")
+				.equal(userId).field("isPublic").equal(true);
+		List<Event> acceptedEvents = eventQuery.asList();
+		publicEvents.addAll(acceptedEvents);
+		
+		return publicEvents;
+	}
+
+	public static List<Event> privateEventsAttending(String userId,
+			String profileUserId) {
+		List<Event> privateEvents = new ArrayList<Event>();
+		
+		Query<Event> acceptedEventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("acceptedUsers")
+				.equal(userId).field("acceptedUsers")
+				.equal(profileUserId).field("isPublic").equal(false);
+		List<Event> acceptedEvents = acceptedEventsQuery.asList();
+		privateEvents.addAll(acceptedEvents);
+		
+		Query<Event> invitedEventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("invitedUsers")
+				.equal(userId).field("acceptedUsers")
+				.equal(profileUserId).field("isPublic").equal(false);
+		List<Event> invitedEvents = invitedEventsQuery.asList();
+		privateEvents.addAll(invitedEvents);
+		
+		Query<Event> declinedEventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("declinedUsers")
+				.equal(userId).field("acceptedUsers")
+				.equal(profileUserId).field("isPublic").equal(false);
+		List<Event> declinedEvents = declinedEventsQuery.asList();
+		privateEvents.addAll(declinedEvents);
+		
+		return privateEvents;
+	}
+
+	public static List<Event> publicEventsHosting(String userId) {
+		List<Event> publicEvents = new ArrayList<Event>();
+		
+		Query<Event> eventQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("owner")
+				.equal(userId).field("isPublic").equal(true);
+		List<Event> hostedEvents = eventQuery.asList();
+		publicEvents.addAll(hostedEvents);
+		
+		return publicEvents;
+	}
+
+	public static List<Event> privateEventsHosting(String userId,
+			String profileUserId) {
+		List<Event> privateEvents = new ArrayList<Event>();
+		
+		Query<Event> acceptedEventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("acceptedUsers")
+				.equal(userId).field("owner").equal(profileUserId)
+				.field("isPublic").equal(false);
+		List<Event> acceptedEvents = acceptedEventsQuery.asList();
+		privateEvents.addAll(acceptedEvents);
+		
+		Query<Event> invitedEventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("invitedUsers")
+				.equal(userId).field("owner").equal(profileUserId)
+				.field("isPublic").equal(false);
+		List<Event> invitedEvents = invitedEventsQuery.asList();
+		privateEvents.addAll(invitedEvents);
+		
+		Query<Event> declinedEventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("declinedUsers")
+				.equal(userId).field("owner").equal(profileUserId)
+				.field("isPublic").equal(false);
+		List<Event> declinedEvents = declinedEventsQuery.asList();
+		privateEvents.addAll(declinedEvents);
+		
+		return privateEvents;
 	}
 
 }

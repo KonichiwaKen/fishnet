@@ -39,13 +39,18 @@ public class EventController extends Controller {
 	
 	public static Result getEvents() {
 		String currentUser = session().get("id");
-		
-		Query<Event> eventQuery =  MorphiaObject.datastore.createQuery(Event.class)
-				.field("owner").equal(currentUser);
-		List<Event> userEvents = eventQuery.asList();
+		List<Event> userEvents = getEvents(currentUser);
 		String eventsJson = new Gson().toJson(userEvents);
 		
 		return ok(eventsJson);
+	}
+	
+	public static List<Event> getEvents(String userId) {
+		Query<Event> eventQuery =  MorphiaObject.datastore
+				.createQuery(Event.class).field("owner").equal(userId);
+		List<Event> userEvents = eventQuery.asList();
+		
+		return userEvents;
 	}
 	
 	public static Result deleteEvent() {
