@@ -34,7 +34,9 @@ public class UserController extends Controller {
 				e.printStackTrace();
 			}
 			
-			MorphiaObject.datastore.save(user);
+			String userId = MorphiaObject.datastore.save(user).getId().toString();
+			session().put("id", userId);
+			
 			return true;
 		}
 		

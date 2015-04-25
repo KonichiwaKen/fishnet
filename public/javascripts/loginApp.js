@@ -30,12 +30,18 @@ app.factory('login', ['$http', '$window', function($http, $window){
   o.login = function(user) {
     return $http.post('/login', user).success(function(data) {
       $window.location.href = '/home';
+    })
+    .error(function(data) {
+      alert('Incorrect username/password');
     });
   };
 
   o.register = function(user) {
     return $http.post('/register', user).success(function(data) {
-      console.log(data);
+      $window.location.href = '/home';
+    })
+    .error(function(data) {
+      alert('Email already in use');
     });
   };
 

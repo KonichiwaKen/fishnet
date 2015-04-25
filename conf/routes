@@ -11,7 +11,7 @@ GET     /home                       controllers.ViewController.homePage()
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Users
-POST	/register					controllers.SignupController.createUser()
+POST	/register					controllers.RegisterController.createUser()
 POST    /login						controllers.LoginController.attemptLogin()
 GET		/logout						controllers.LoginController.logout()
 GET		/profile					controllers.ViewController.profilePage()

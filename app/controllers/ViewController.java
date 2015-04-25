@@ -13,7 +13,7 @@ import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.home;
-import views.html.index;
+import views.html.login;
 import views.html.profile;
 import models.Event;
 import models.User;
@@ -35,7 +35,7 @@ public class ViewController extends Controller {
             }
         }
         
-		return ok(index.render());
+		return ok(login.render());
 	}
 
 	public static Result homePage() {
