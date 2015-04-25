@@ -5,6 +5,8 @@ app.controller('HomeCtrl', [
   'events',
   function($scope, events) {
     events.getEvents();
+    $scope.events = events.events;
+    console.log($scope.events);
 
     $scope.addEvent = function() {
       events.addEvent({
@@ -27,15 +29,18 @@ app.controller('HomeCtrl', [
 ]);
 
 app.factory('events', ['$http', '$window', function($http, $window) {
-  var o = {};
+  var o = {
+    events: []
+  };
 
   o.addEvent = function(event) {
     $http.post('/events', event);
   };
 
   o.getEvents = function() {
-    $http.get('/events').success(function(data) {
-      console.log(data);
+    return $http.get('/events').success(function(data) {
+      o.events.push.apply(o.events, angular.fromJson(data));
+      // console.log(o.events);
     })
   }
 
