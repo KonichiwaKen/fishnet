@@ -75,11 +75,15 @@
             </button>
           </div>
 
-          <div ng-show="friendStatus=='REQUEST_RECEIVED'">
-            <button class="btn btn-primary">
+          <div class="dropdown" ng-show="friendStatus=='REQUEST_RECEIVED'">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
               Friend request received
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="acceptRequest('@profileUser.id')">Accept</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="declineRequest('@profileUser.id')">Decline</a></li>
+            </ul>
           </div>
 
           <div ng-show="friendStatus=='REQUEST_DECLINED'">

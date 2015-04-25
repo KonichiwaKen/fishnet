@@ -15,6 +15,14 @@ app.controller('ProfileCtrl', [
     $scope.addFriend = function(user) {
       requests.addFriend(user);
     }
+
+    $scope.acceptRequest = function(user) {
+      requests.acceptRequest(user);
+    }
+
+    $scope.declineRequest = function(user) {
+      requests.declineRequest(user);
+    }
 }]);
 
 app.factory('requests', ['$http', '$window', function($http, $window) {
@@ -22,6 +30,18 @@ app.factory('requests', ['$http', '$window', function($http, $window) {
 
   o.addFriend = function(user) {
     return $http.post('/friendRequest/create', {'user': user}).success(function(data) {
+      $window.location.href = '/profile?user=' + user;
+    })
+  };
+
+  o.acceptRequest = function(user) {
+    return $http.post('/friendRequest/accept', {'user': user}).success(function(data) {
+      $window.location.href = '/profile?user=' + user;
+    })
+  };
+
+  o.declineRequest = function(user) {
+    return $http.post('/friendRequest/decline', {'user': user}).success(function(data) {
       $window.location.href = '/profile?user=' + user;
     })
   };

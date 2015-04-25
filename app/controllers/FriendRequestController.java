@@ -7,7 +7,6 @@ import org.mongodb.morphia.query.UpdateOperations;
 import models.FriendRequest;
 import models.utils.MorphiaObject;
 import models.utils.RequestStatus;
-import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
