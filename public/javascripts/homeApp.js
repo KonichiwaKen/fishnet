@@ -17,7 +17,14 @@ app.controller('HomeCtrl', [
         endTime: $scope.endTime,
         isPublic: $scope.isPublic
       });
-
+      // $scope.events.push.apply($scope.events, events.events);
+      
+      // while (events.length) {
+      //     events.pop();
+      // }
+      // events.getEvents();
+      // $scope.events = events.events;
+      // console.log($scope.events);
       $scope.title = '';
       $scope.description = '';
       $scope.location = '';
@@ -34,7 +41,13 @@ app.factory('events', ['$http', '$window', function($http, $window) {
 
 
   o.addEvent = function(event) {
-    return $http.post('/events', event).error(function(data) {
+    return $http.post('/events', event).success(function(data){
+      // o.events.push.apply(o.events, angular.fromJson(data));
+      // console.log(angular.fromJson(data));
+      console.log('Event Added!');
+      $window.location.href = '/home';
+    })
+    .error(function(data) {
       alert('Error creating event');
     });
   };
@@ -42,7 +55,6 @@ app.factory('events', ['$http', '$window', function($http, $window) {
   o.getEvents = function() {
     return $http.get('/events').success(function(data) {
       o.events.push.apply(o.events, angular.fromJson(data));
-      // loop = (o.events);
       for(var i=0; i<o.events.length;i++){
         o.events[i].startTimeDisplay = convertDate(o.events[i].startTime);
         o.events[i].endTime = convertDate(o.events[i].endTime);
