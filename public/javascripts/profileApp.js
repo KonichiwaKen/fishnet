@@ -78,4 +78,5 @@ app.factory('requests', ['$http', '$window', function($http, $window) {
     })
   };
 
+  return o;
 }]);
