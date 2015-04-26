@@ -179,6 +179,13 @@ public class UserController extends Controller {
 		List<Event> acceptedEvents = acceptedEventsQuery.asList();
 		privateEvents.addAll(acceptedEvents);
 		
+		Query<Event> accepted2EventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("acceptedUsers")
+				.equal(userId).field("invitedUsers")
+				.equal(profileUserId).field("isPublic").equal(false);
+		List<Event> accepted2Events = accepted2EventsQuery.asList();
+		privateEvents.addAll(accepted2Events);
+		
 		Query<Event> invitedEventsQuery = MorphiaObject.datastore
 				.createQuery(Event.class).field("invitedUsers")
 				.equal(userId).field("acceptedUsers")
@@ -186,12 +193,40 @@ public class UserController extends Controller {
 		List<Event> invitedEvents = invitedEventsQuery.asList();
 		privateEvents.addAll(invitedEvents);
 		
+		Query<Event> invited2EventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("invitedUsers")
+				.equal(userId).field("invitedUsers")
+				.equal(profileUserId).field("isPublic").equal(false);
+		List<Event> invited2Events = invited2EventsQuery.asList();
+		privateEvents.addAll(invited2Events);
+		
 		Query<Event> declinedEventsQuery = MorphiaObject.datastore
 				.createQuery(Event.class).field("declinedUsers")
 				.equal(userId).field("acceptedUsers")
 				.equal(profileUserId).field("isPublic").equal(false);
 		List<Event> declinedEvents = declinedEventsQuery.asList();
 		privateEvents.addAll(declinedEvents);
+		
+		Query<Event> declined2EventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("declinedUsers")
+				.equal(userId).field("invitedUsers")
+				.equal(profileUserId).field("isPublic").equal(false);
+		List<Event> declined2Events = declined2EventsQuery.asList();
+		privateEvents.addAll(declined2Events);
+		
+		Query<Event> ownerEventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("owner")
+				.equal(userId).field("acceptedUsers")
+				.equal(profileUserId).field("isPublic").equal(false);
+		List<Event> ownerEvents = ownerEventsQuery.asList();
+		privateEvents.addAll(ownerEvents);
+		
+		Query<Event> owner2EventsQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("owner")
+				.equal(userId).field("invitedUsers")
+				.equal(profileUserId).field("isPublic").equal(false);
+		List<Event> owner2Events = owner2EventsQuery.asList();
+		privateEvents.addAll(owner2Events);
 		
 		return privateEvents;
 	}

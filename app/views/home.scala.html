@@ -52,7 +52,7 @@
       </div>
     </div>
   </nav>
-  
+
 
 
   <body ng-app="fishNet" ng-controller="HomeCtrl">
@@ -98,8 +98,8 @@
                           {{event.location}}
                         </p>
                         <iframe
-                         width="536.5"
-                         height="400"
+                         width="491"
+                         height="300"
                          frameborder="0" style="border:0"
                          ng-src="{{event.link}}"
                          style="display: inline-block;">
@@ -206,6 +206,21 @@
         </div>
       </div>
       <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <select class="form-control" ng-model="eventToDisplay.inviteUser" ng-options="friend.id as friend.name for friend in eventToDisplay.friends">
+                <option value="" disabled>User to invite</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <button class="btn btn-primary" ng-click="inviteFriend(eventToDisplay.inviteUser, eventToDisplay.id)">
+              Invite user
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

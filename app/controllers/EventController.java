@@ -53,7 +53,10 @@ public class EventController extends Controller {
 	
 	public static List<Event> getEvents(String userId) {
 		Query<Event> eventQuery =  MorphiaObject.datastore
-				.createQuery(Event.class).field("owner").equal(userId);
+				.createQuery(Event.class); 
+		eventQuery.or(eventQuery.criteria("owner").equal(userId),
+					  eventQuery.criteria("invitedUsers").equal(userId),
+					  eventQuery.criteria("acceptedUsers").equal(userId));
 		List<Event> userEvents = eventQuery.asList();
 		
 		return userEvents;

@@ -3,11 +3,25 @@ app = angular.module('fishNet', []);
 app.controller('HomeCtrl', [
   '$scope',
   'events',
-  function($scope, events) {
+  'friends',
+  function($scope, events, friends) {
     events.getEvents();
+    friends.getFriends();
     $scope.events = events.events;
 
-    $scope.displayModal = function(event){
+    $scope.displayModal = function(event) {
+      // add friends to event, but not those who have been invited/accepted/declined
+      var friendsToDisplay = [];
+
+      for (var i = 0; i < friends.friends.length; i++) {
+        if (event.invitedUsers.indexOf(friends.friends[i]) == -1 &&
+            event.acceptedUsers.indexOf(friends.friends[i]) == -1 &&
+            event.declinedUsers.indexOf(friends.friends[i]) == -1) {
+          friendsToDisplay.push(friends.friends[i]);
+        }
+      }
+
+      event.friends = friendsToDisplay;
       $scope.eventToDisplay = event;
       console.log($scope.eventToDisplay.invitedUsers.length);
       console.log('NULL');
@@ -32,6 +46,10 @@ app.controller('HomeCtrl', [
       $scope.startTime = '';
       $scope.endTime = '';
       $scope.isPublic = false;
+    };
+
+    $scope.inviteFriend = function(user, event) {
+      friends.inviteFriend(user, event);
     }
 }]);
 
@@ -93,3 +111,22 @@ app.factory('events', ['$http', '$window', '$sce', function($http, $window, $sce
 
   return o;
 }]);
+
+app.factory('friends', ['$http', function($http) {
+  var o = {
+    friends: []
+  };
+
+  o.getFriends = function() {
+    $http.get('/friendsList').success(function(data) {
+      o.friends.push.apply(o.friends, data);
+    });
+  };
+
+  o.inviteFriend = function(user, event) {
+    $http.post('/event/invite?user=' + user + '&event=' + event).success(function(data) {
+    });
+  };
+
+  return o;
+}])
