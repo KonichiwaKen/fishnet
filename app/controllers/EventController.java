@@ -20,9 +20,10 @@ public class EventController extends Controller {
 		Form<Event> eventForm = new Form<Event>(Event.class);
 		Event event = eventForm.bindFromRequest().get();
 		event.setOwner(session().get("id"));
+		String eventId = saveToDatabase(event);
 		
-		if(saveToDatabase(event) != null) {
-			return ok();
+		if(eventId != null) {
+			return ok(eventId);
 		} else {
 			return badRequest();
 		}
@@ -44,7 +45,6 @@ public class EventController extends Controller {
 		String currentUser = session().get("id");
 		List<Event> userEvents = getEvents(currentUser);
 		String eventsJson = new Gson().toJson(userEvents);
-		
 		return ok(eventsJson);
 	}
 	

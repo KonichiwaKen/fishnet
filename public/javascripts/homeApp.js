@@ -6,9 +6,8 @@ app.controller('HomeCtrl', [
   function($scope, events) {
     events.getEvents();
     $scope.events = events.events;
-    console.log($scope.events);
 
-    $scope.addEvent = function() {
+    $scope.addEvent = function(userId) {
       events.addEvent({
         title: $scope.title,
         description: $scope.description,
@@ -16,15 +15,8 @@ app.controller('HomeCtrl', [
         startTime: $scope.startTime,
         endTime: $scope.endTime,
         isPublic: $scope.isPublic
-      });
-      // $scope.events.push.apply($scope.events, events.events);
-      
-      // while (events.length) {
-      //     events.pop();
-      // }
-      // events.getEvents();
-      // $scope.events = events.events;
-      // console.log($scope.events);
+      }, userId);
+
       $scope.title = '';
       $scope.description = '';
       $scope.location = '';
@@ -39,13 +31,13 @@ app.factory('events', ['$http', '$window', function($http, $window) {
     events: []
   };
 
-
-  o.addEvent = function(event) {
+  o.addEvent = function(event, userId) {
     return $http.post('/events', event).success(function(data){
-      // o.events.push.apply(o.events, angular.fromJson(data));
-      // console.log(angular.fromJson(data));
-      console.log('Event Added!');
-      $window.location.href = '/home';
+      event.owner = userId;
+      event.id = data;
+      event.startTimeDisplay = convertDate(event.startTime);
+      event.endTime = convertDate(event.endTime);
+      o.events.push(event);
     })
     .error(function(data) {
       alert('Error creating event');
@@ -62,7 +54,6 @@ app.factory('events', ['$http', '$window', function($http, $window) {
     })
   }
 
-
   convertDate = function(dateString) {
     var year = parseInt(dateString.substring(0, 4));
     var month = parseInt(dateString.substring(5, 7));
@@ -70,13 +61,11 @@ app.factory('events', ['$http', '$window', function($http, $window) {
     var hour = parseInt(dateString.substring(11, 13));
     var minute = dateString.substring(14, 16);
     var ampm;
-
     if (hour >= 12) {
       ampm = "PM";
     } else {
       ampm = "AM";
     }
-
     if (hour > 12) {
       hour = hour - 12;
     } else if (hour == 0) {
@@ -88,14 +77,3 @@ app.factory('events', ['$http', '$window', function($http, $window) {
 
   return o;
 }]);
-
-
-
-
-
-
-
-
-
-
-
