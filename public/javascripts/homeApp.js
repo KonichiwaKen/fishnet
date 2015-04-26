@@ -7,6 +7,10 @@ app.controller('HomeCtrl', [
     events.getEvents();
     $scope.events = events.events;
 
+    $scope.displayModal = function(event){
+      $scope.eventToDisplay = event;
+    };
+
     $scope.addEvent = function(userId) {
       events.addEvent({
         title: $scope.title,
