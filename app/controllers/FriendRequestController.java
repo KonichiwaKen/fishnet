@@ -4,7 +4,12 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import models.FriendRequest;
+import models.User;
 import models.utils.MorphiaObject;
 import models.utils.RequestStatus;
 import play.Logger;
@@ -35,7 +40,7 @@ public class FriendRequestController extends Controller {
 	
 	public static Result acceptRequest() {
 		String userId = session().get("id");
-		String profileUserId = request().getQueryString("user");
+		String profileUserId = request().body().asJson().get("user").asText();
 		String requestId = checkFriendRequest(userId, profileUserId, "requestee");
 		
 		if (requestId == null) {
@@ -55,7 +60,7 @@ public class FriendRequestController extends Controller {
 	
 	public static Result declineRequest() {
 		String userId = session().get("id");
-		String profileUserId = request().getQueryString("user");
+		String profileUserId = request().body().asJson().get("user").asText();
 		String requestId = checkFriendRequest(userId, profileUserId, "requestee");
 		
 		if (requestId == null) {
@@ -106,6 +111,35 @@ public class FriendRequestController extends Controller {
 		} else {
 			return null;
 		}
+	}
+	
+	public static Result getFriends() {
+		String currentUserId = session().get("id");
+		
+		Query <FriendRequest> query = MorphiaObject.datastore.createQuery(FriendRequest.class);
+		query.or(query.criteria("requester").equal(currentUserId),
+				 query.criteria("requestee").equal(currentUserId));
+		query.and(query.criteria("status")
+				.equal(RequestStatus.ACCEPTED));
+		
+		JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
+		ArrayNode friends = nodeFactory.arrayNode();
+		
+		for (FriendRequest request : query) {
+			ObjectNode friend = nodeFactory.objectNode();
+			
+			String userId = request.getRequester().equals(currentUserId)
+					? request.getRequestee()
+					: request.getRequester();
+					
+			User user = UserController.getUserById(userId);
+			friend.put("id", userId);
+			friend.put("name", user.getFullName());
+			
+			friends.add(friend);
+		}
+		
+		return ok(friends);
 	}
 	
 	public FriendRequest getRequestById(String requestId) {

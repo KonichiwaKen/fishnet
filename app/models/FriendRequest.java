@@ -25,9 +25,17 @@ public class FriendRequest {
 	public String getId() {
 		return id;
 	}
+	
+	public String getRequester() {
+		return requester;
+	}
+	
+	public String getRequestee() {
+		return requestee;
+	}
 
 	public RequestStatus getStatus() {
 		return status;
 	}
-	
+
 }

@@ -55,7 +55,11 @@
       <div class="col-md-6 col-md-offset-3">
         <h1>Friends list</h1>
         <div ng-repeat="friend in friends">
-          {{friend.firstName}} {{friend.lastName}}
+          <a href="/profile?user={{friend.id}}">
+            <h4>{{friend.name}}</h4>
+          </a>
+
+          <br>
         </div>
       </div>
 
@@ -68,9 +72,7 @@
         </form>
 
         <div ng-repeat="searchResult in searchResults | orderBy:'similarity':reverse">
-          <a href="/profile?user={{searchResult.id}}">
-            <h4>{{searchResult.name}}</h4>
-          </a>
+          <h4>{{searchResult.name}}</h4>
 
           <div ng-show="'{{searchResult.friendStatus}}'=='FRIENDS'">
             <a href="/profile?user={{searchResult.id}}">

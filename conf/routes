@@ -28,6 +28,7 @@ POST	/friendRequest/decline		controllers.FriendRequestController.declineRequest(
 
 # Friends
 GET		/friends					controllers.ViewController.friendsPage()
+GET		/friendsList				controllers.FriendRequestController.getFriends()
 
 # Search
 GET		/search/users				controllers.SearchController.searchUsers()
