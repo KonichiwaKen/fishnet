@@ -30,17 +30,18 @@ app.controller('HomeCtrl', [
     }
 }]);
 
-app.factory('events', ['$http', '$window', function($http, $window) {
+app.factory('events', ['$http', '$window', '$sce', function($http, $window, $sce) {
   var o = {
     events: []
   };
 
   o.addEvent = function(event, userId) {
-    return $http.post('/events', event).success(function(data){
+    return $http.post('/events', event).success(function(data) {
       event.owner = userId;
       event.id = data;
       event.startTimeDisplay = convertDate(event.startTime);
       event.endTime = convertDate(event.endTime);
+      event.link = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?key=AIzaSyCpYioRQ0epUsEnIz2YlzbVYNKpUXWnYqg&q=' + convertTextString(event.location) + '&zoom=14');
       o.events.push(event);
     })
     .error(function(data) {
@@ -54,6 +55,7 @@ app.factory('events', ['$http', '$window', function($http, $window) {
       for(var i=0; i<o.events.length;i++){
         o.events[i].startTimeDisplay = convertDate(o.events[i].startTime);
         o.events[i].endTime = convertDate(o.events[i].endTime);
+        o.events[i].link = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?key=AIzaSyCpYioRQ0epUsEnIz2YlzbVYNKpUXWnYqg&q=' + convertTextString(o.events[i].location) + '&zoom=14');
       }
     })
   }
@@ -77,6 +79,11 @@ app.factory('events', ['$http', '$window', function($http, $window) {
     }
     var str = hour + ":" + minute + " " + ampm + " on " + month + "/" + day + "/" + year;
     return str;
+  }
+
+  convertTextString = function(location) {
+    var convertedString = location.split(' ').join('+');
+    return convertedString;
   }
 
   return o;

@@ -73,6 +73,19 @@ public class ViewController extends Controller {
 			if (!privateEventsHosting.isEmpty()) {
 				eventsHosting.addAll(privateEventsHosting);
 			}
+		} else if (userId.equals(profileUserId)) {
+			List<Event> privateEventsAttending = UserController
+					.privateEventsAttending(userId);
+			List<Event> privateEventsHosting = UserController
+					.privateEventsHosting(userId);
+			
+			if (!privateEventsAttending.isEmpty()) {
+				eventsAttending.addAll(privateEventsAttending);
+			}
+			
+			if (!privateEventsHosting.isEmpty()) {
+				eventsHosting.addAll(privateEventsHosting);
+			}
 		}
 		
 		String eventsAttendingJsonString = new Gson().toJson(eventsAttending);

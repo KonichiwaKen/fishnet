@@ -118,30 +118,41 @@
                 <div id="{{eventHosting.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{eventHosting.id}}">
                   <div class="panel-body">
                     <div class="list-group">
-                       <a href="#" class="list-group-item">
+                      <a href="#" class="list-group-item">
                         <h4 class="list-group-item-heading">
-                           Description
+                          Description
                         </h4>
+
                         <p class="list-group-item-text">
-                           {{eventHosting.description}}
+                          {{eventHosting.description}}
                         </p>
-                       </a>
-                       <a href="#" class="list-group-item">
+                      </a>
+                      <a href="#" class="list-group-item">
                         <h4 class="list-group-item-heading">
-                           Time
+                          Time
                         </h4>
+
                         <p class="list-group-item-text">
-                           {{eventHosting.startTimeDisplay}} to {{eventHosting.endTime}}
+                          {{eventHosting.startTimeDisplay}} to {{eventHosting.endTime}}
                         </p>
-                       </a>
-                       <a href="#" class="list-group-item">
+                      </a>
+                      <a href="#" class="list-group-item">
                         <h4 class="list-group-item-heading">
-                           Location
+                          Location
                         </h4>
+
                         <p class="list-group-item-text">
-                           {{eventHosting.location}}
+                          {{eventHosting.location}}
                         </p>
-                       </a>
+
+                        <iframe
+                          width="491"
+                          height="400"
+                          frameborder="0" style="border:0"
+                          ng-src="{{eventHosting.link}}"
+                          style="display: inline-block;">
+                        </iframe>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -169,30 +180,37 @@
                 <div id="{{eventAttending.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{eventAttending.id}}">
                   <div class="panel-body">
                     <div class="list-group">
-                       <a href="#" class="list-group-item">
+                      <a href="#" class="list-group-item">
                         <h4 class="list-group-item-heading">
                            Description
                         </h4>
                         <p class="list-group-item-text">
                            {{eventAttending.description}}
                         </p>
-                       </a>
-                       <a href="#" class="list-group-item">
+                      </a>
+                      <a href="#" class="list-group-item">
                         <h4 class="list-group-item-heading">
                            Time
                         </h4>
                         <p class="list-group-item-text">
-                           {{eventAttending.startTimeDisplay}} to {{eventAttending.endTime}}
+                          {{eventAttending.startTimeDisplay}} to {{eventAttending.endTime}}
                         </p>
-                       </a>
-                       <a href="#" class="list-group-item">
+                      </a>
+                      <a href="#" class="list-group-item">
                         <h4 class="list-group-item-heading">
                            Location
                         </h4>
                         <p class="list-group-item-text">
                            {{eventAttending.location}}
                         </p>
-                       </a>
+                        <iframe
+                          width="491"
+                          height="400"
+                          frameborder="0" style="border:0"
+                          ng-src="{{eventAttending.link}}"
+                          style="display: inline-block;">
+                        </iframe>
+                      </a>
                     </div>
                   </div>
                 </div>
