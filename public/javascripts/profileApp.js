@@ -6,9 +6,7 @@ app.controller('ProfileCtrl', [
   'requests',
   function($scope, $sce, requests) {
     $scope.init = function(json) {
-      var jsonString = angular.fromJson(json);
-
-      console.log(jsonString);
+      var jsonString = JSON.parse(json);
 
       $scope.friendStatus = jsonString.friendStatus;
       $scope.eventsAttending = jsonString.eventsAttending;

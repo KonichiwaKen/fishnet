@@ -23,14 +23,16 @@ app.controller('HomeCtrl', [
 
       event.friends = friendsToDisplay;
       $scope.eventToDisplay = event;
-      console.log($scope.eventToDisplay.invitedUsers.length);
-      console.log('NULL');
-      if(o.events[i].declinedUsers == null){
-        console.log('NULL');
-      }
     };
 
     $scope.addEvent = function(userId) {
+      $scope.title = $scope.title.replace('\'', '');
+      $scope.location = $scope.location.replace('\'', '');
+
+      if ($scope.description != null) {
+        $scope.description = $scope.description.replace('\'', '');
+      }
+
       events.addEvent({
         title: $scope.title,
         description: $scope.description,
