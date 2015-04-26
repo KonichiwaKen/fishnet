@@ -101,5 +101,53 @@ public class EventController extends Controller {
 			return ok();
 		}
 	}
+	
+	public static Result acceptEventInvite() {
+		String currentUser = session().get("id");
+		String eventId = request().getQueryString("event");
+		
+		Query<Event> eventQuery = MorphiaObject.datastore.createQuery(Event.class)
+				.field("_id").equal(new ObjectId(eventId))
+				.field("invitedUsers").equal(currentUser);
+		
+		Event event = eventQuery.get();
+		
+		if (event == null) {
+			return badRequest();
+		} else {
+			event.acceptUser(currentUser);
+			UpdateOperations<Event> eventOps = MorphiaObject.datastore
+					.createUpdateOperations(Event.class)
+					.set("invitedUsers", event.getInvitedUsers())
+					.set("acceptedUsers", event.getAcceptedUsers());
+			MorphiaObject.datastore.update(eventQuery, eventOps);
+			
+			return ok();
+		}
+	}
+	
+	public static Result declineEventInvite() {
+		String currentUser = session().get("id");
+		String eventId = request().getQueryString("event");
+		
+		Query<Event> eventQuery = MorphiaObject.datastore.createQuery(Event.class)
+				.field("_id").equal(new ObjectId(eventId))
+				.field("invitedUsers").equal(currentUser);
+		
+		Event event = eventQuery.get();
+		
+		if (event == null) {
+			return badRequest();
+		} else {
+			event.declineUser(currentUser);
+			UpdateOperations<Event> eventOps = MorphiaObject.datastore
+					.createUpdateOperations(Event.class)
+					.set("invitedUsers", event.getInvitedUsers())
+					.set("declinedUsers", event.getDeclinedUsers());
+			MorphiaObject.datastore.update(eventQuery, eventOps);
+			
+			return ok();
+		}
+	}
 
 }

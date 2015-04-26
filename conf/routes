@@ -21,6 +21,8 @@ DELETE	/event						controllers.EventController.deleteEvent()
 GET		/events						controllers.EventController.getEvents()
 POST	/events						controllers.EventController.createEvent()
 POST	/event/invite				controllers.EventController.inviteToEvent()
+POST	/event/accept				controllers.EventController.acceptEventInvite()
+POST	/event/decline				controllers.EventController.declineEventInvite()
 
 # Friend requests
 POST	/friendRequest/create		controllers.FriendRequestController.createRequest()

@@ -36,6 +36,14 @@ public class Event {
 		return invitedUsers;
 	}
 
+	public List<String> getAcceptedUsers() {
+		return acceptedUsers;
+	}
+	
+	public List<String> getDeclinedUsers() {
+		return declinedUsers;
+	}
+
 	public boolean inviteUser(String user) {
 		if (invitedUsers.contains(user) || acceptedUsers.contains(user) || declinedUsers.contains(user)) {
 			return false;
@@ -43,6 +51,16 @@ public class Event {
 			invitedUsers.add(user);
 			return true;
 		}
+	}
+
+	public void acceptUser(String user) {
+		invitedUsers.remove(user);
+		acceptedUsers.add(user);
+	}
+
+	public void declineUser(String user) {
+		invitedUsers.remove(user);
+		declinedUsers.add(user);
 	}
 	
 }
