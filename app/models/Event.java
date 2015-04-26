@@ -62,5 +62,10 @@ public class Event {
 		invitedUsers.remove(user);
 		declinedUsers.add(user);
 	}
+
+	public void renameUser(String userId, String fullName) {
+		invitedUsers.remove(userId);
+		invitedUsers.add(fullName);
+	}
 	
 }

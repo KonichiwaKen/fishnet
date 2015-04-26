@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 
 import models.Event;
 import models.FriendRequest;
+import models.User;
 import models.utils.MorphiaObject;
 import models.utils.RequestStatus;
 import play.data.Form;
@@ -58,6 +59,13 @@ public class EventController extends Controller {
 					  eventQuery.criteria("invitedUsers").equal(userId),
 					  eventQuery.criteria("acceptedUsers").equal(userId));
 		List<Event> userEvents = eventQuery.asList();
+		
+		for (Event event : userEvents) {
+			for (String invitedUser : event.getInvitedUsers()) {
+				User user = UserController.getUserById(invitedUser);
+				event.renameUser(invitedUser, user.getFullName());
+			}
+		}
 		
 		return userEvents;
 	}
