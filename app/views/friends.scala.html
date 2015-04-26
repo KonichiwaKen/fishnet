@@ -1,0 +1,77 @@
+@(user: User)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>FishNet</title>
+
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="@routes.Assets.at("javascripts/friendsApp.js")" type="text/javascript"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet" type="text/css">
+</head>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="/home">FishNet</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/home">Event feed</a></li>
+        <li class="active">
+          <a href="">Friends<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@user.firstName @user.lastName<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/profile?user=@user.id">@user.email</a></li>
+            <li class="divider"></li>
+            <li><a href="@routes.LoginController.logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<body ng-app="fishNet" ng-controller="FriendCtrl">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h1>Friends list</h1>
+        <div ng-repeat="friend in friends">
+          {{friend.firstName}} {{friend.lastName}}
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <form ng-submit="searchUsers()">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Search for users"
+                 ng-model="searchQuery">
+          <div ng-repeat="searchResult in searchResults | orderBy:'similarity'">
+            {{searchResult.name}} - {{searchResult.friendStatus}}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

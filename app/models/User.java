@@ -3,6 +3,8 @@ package models;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 @Entity("Users")
 public class User {
 
@@ -22,6 +24,22 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+	}
+
+	public String getId() {
+		return id;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public String getFullName() {
+		return firstName + " " + lastName;
 	}
     
 }

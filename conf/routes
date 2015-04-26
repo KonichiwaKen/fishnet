@@ -25,3 +25,9 @@ POST	/events						controllers.EventController.createEvent()
 POST	/friendRequest/create		controllers.FriendRequestController.createRequest()
 POST	/friendRequest/accept		controllers.FriendRequestController.acceptRequest()
 POST	/friendRequest/decline		controllers.FriendRequestController.declineRequest()
+
+# Friends
+GET		/friends					controllers.ViewController.friendsPage()
+
+# Search
+GET		/search/users				controllers.SearchController.searchUsers()

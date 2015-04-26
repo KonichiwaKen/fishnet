@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.friends;
 import views.html.home;
 import views.html.login;
 import views.html.profile;
@@ -90,4 +91,12 @@ public class ViewController extends Controller {
 		
 		return ok(profile.render(user, profileUser, profileJson.toString()));
 	}
+	
+	public static Result friendsPage() {
+		String userId = session().get("id");
+		User user = UserController.getUserById(userId);
+		
+		return ok(friends.render(user));
+	}
+	
 }
