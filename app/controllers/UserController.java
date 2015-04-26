@@ -236,4 +236,14 @@ public class UserController extends Controller {
 		return privateEvents;
 	}
 
+	public static List<Event> privateEventsAttending(String userId) {
+		return MorphiaObject.datastore.createQuery(Event.class)
+				.field("acceptedUsers").equal(userId).asList();
+	}
+
+	public static List<Event> privateEventsHosting(String userId) {
+		return MorphiaObject.datastore.createQuery(Event.class)
+				.field("owner").equal(userId).asList();
+	}
+
 }
