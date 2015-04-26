@@ -7,6 +7,7 @@ import org.mongodb.morphia.query.UpdateOperations;
 import models.FriendRequest;
 import models.utils.MorphiaObject;
 import models.utils.RequestStatus;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -15,6 +16,9 @@ public class FriendRequestController extends Controller {
 	public static Result createRequest() {
 		String userId = session().get("id");
 		String profileUserId = request().body().asJson().get("user").asText();
+		
+		Logger.debug(userId);
+		Logger.debug(profileUserId);
 		
 		if (checkFriendRequest(userId, profileUserId) != null) {
 			return badRequest();
@@ -71,17 +75,23 @@ public class FriendRequestController extends Controller {
 
 	private static String checkFriendRequest(String userId,
 			String profileUserId, String type) {
-		if (type.equals("requester") || type.equals("requestee")) {
-			Query<FriendRequest> query = MorphiaObject.datastore
-					.createQuery(FriendRequest.class).field(type)
-					.equal(userId);
-			
-			FriendRequest request = query.get();
-			
-			return request != null ? request.getId() : null;
+		Query<FriendRequest> query;
+		
+		if (type.equals("requester")) {
+			query = MorphiaObject.datastore
+					.createQuery(FriendRequest.class).field("requester")
+					.equal(userId).field("requestee").equal(profileUserId);
+		} else if (type.equals("requestee")) {
+			query = MorphiaObject.datastore
+					.createQuery(FriendRequest.class).field("requester")
+					.equal(profileUserId).field("requestee").equal(userId);
 		} else {
 			return null;
 		}
+		
+		FriendRequest request = query.get();
+		
+		return request != null ? request.getId() : null;
 	}
 
 	private static String checkFriendRequest(String userId,

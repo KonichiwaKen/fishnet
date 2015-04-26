@@ -11,7 +11,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="@routes.Assets.at("javascripts/friendsApp.js")" type="text/javascript"></script>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-  <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet" type="text/css">
 </head>
 
 <nav class="navbar navbar-default">
@@ -61,15 +60,65 @@
       </div>
 
       <div class="col-md-3">
-        <form ng-submit="searchUsers()">
+        <form ng-submit="searchUsers()" style="margin-top: 24px;">
           <input type="text"
                  class="form-control"
                  placeholder="Search for users"
                  ng-model="searchQuery">
-          <div ng-repeat="searchResult in searchResults | orderBy:'similarity'">
-            {{searchResult.name}} - {{searchResult.friendStatus}}
-          </div>
         </form>
+
+        <div ng-repeat="searchResult in searchResults | orderBy:'similarity':reverse">
+          <a href="/profile?user={{searchResult.id}}">
+            <h4>{{searchResult.name}}</h4>
+          </a>
+
+          <div ng-show="'{{searchResult.friendStatus}}'=='FRIENDS'">
+            <a href="/profile?user={{searchResult.id}}">
+              <button class="btn btn-success">
+                Friends
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              </button>
+            </a>
+          </div>
+
+          <div ng-show="'{{searchResult.friendStatus}}'=='NOT_FRIENDS'">
+            <a href="/profile?user={{searchResult.id}}">
+              <button class="btn btn-primary">
+                Not friends
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              </button>
+            </a>
+          </div>
+
+          <div ng-show="'{{searchResult.friendStatus}}'=='REQUEST_SENT'">
+            <a href="/profile?user={{searchResult.id}}">
+              <button class="btn btn-primary">
+                Pending friend request
+                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+              </button>
+            </a>
+          </div>
+
+          <div class="dropdown" ng-show="'{{searchResult.friendStatus}}'=='REQUEST_RECEIVED'">
+            <a href="/profile?user={{searchResult.id}}">
+              <button class="btn btn-primary">
+                Friend request received
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              </button>
+            </a>
+          </div>
+
+          <div ng-show="'{{searchResult.friendStatus}}'=='REQUEST_DECLINED'">
+            <a href="/profile?user={{searchResult.id}}">
+              <button class="btn btn-danger">
+                Rejected friend request
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </button>
+            </a>
+          </div>
+
+          <br>
+        </div>
       </div>
     </div>
   </div>

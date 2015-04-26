@@ -17,6 +17,7 @@ app.factory('search', ['$http', function($http) {
     $http.get('/search/users?query=' + searchQuery).success(function(data) {
       o.searchResults.length = 0;
       o.searchResults.push.apply(o.searchResults, data);
+      console.log(o.searchResults);
     });
   };
 
