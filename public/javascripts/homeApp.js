@@ -9,6 +9,11 @@ app.controller('HomeCtrl', [
 
     $scope.displayModal = function(event){
       $scope.eventToDisplay = event;
+      console.log($scope.eventToDisplay.invitedUsers.length);
+      console.log('NULL');
+      if(o.events[i].declinedUsers == null){
+        console.log('NULL');
+      }
     };
 
     $scope.addEvent = function(userId) {

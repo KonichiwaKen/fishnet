@@ -162,11 +162,50 @@
                {{eventToDisplay.location}}
             </p>
           </a>
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">
+               Is Public ?
+            </h4>
+            <p class="list-group-item-text">
+               {{eventToDisplay.isPublic}}
+            </p>
+          </a>
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">
+               Friends Attending:
+            </h4>
+            <p class="list-group-item-text">
+              <div ng-repeat="acceptedUser in eventToDisplay.acceptedUsers | orderBy:'acceptedUsers'">
+                <ul><li>{{acceptedUser}}</li></ul>
+                <div ng-show="eventToDisplay.acceptedUsers.length == 0">No Friends Attending</div>
+            </p>
+            </div>
+          </a>
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">
+               Friends Invited:
+            </h4>
+            <p class="list-group-item-text">
+              <div ng-repeat="invitedUser in eventToDisplay.invitedUsers | orderBy:'invitedUsers'">
+                <ul><li>{{invitedUser}}</li></ul>
+                <div ng-show="eventToDisplay.invitedUsers.length == 0"> No Friends Invited</div>
+            </p>
+            </div>
+          </a>
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">
+               Friends Not Coming:
+            </h4>
+            <p class="list-group-item-text">
+              <div ng-repeat="declinedUser in eventToDisplay.declinedUsers | orderBy:'declinedUsers'">
+                <ul><li>{{declinedUser}}</li></ul>
+                <div ng-show="eventToDisplay.declinedUsers.length == 0">Everyone's Coming!!</div>
+            </p>
+            </div>
+          </a>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Invite Friends</button>
-        <button type="button" class="btn btn-primary">Edit</button>
       </div>
     </div>
   </div>
