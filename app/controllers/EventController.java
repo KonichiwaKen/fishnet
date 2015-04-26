@@ -5,11 +5,14 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import com.google.gson.Gson;
 
 import models.Event;
+import models.FriendRequest;
 import models.utils.MorphiaObject;
+import models.utils.RequestStatus;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -68,6 +71,34 @@ public class EventController extends Controller {
 			return ok();
 		} else {
 			return badRequest();
+		}
+	}
+	
+	public static Result inviteToEvent() {
+		String currentUser = session().get("id");
+		String eventId = request().getQueryString("event");
+		String user = request().getQueryString("user");
+		
+		Query<Event> eventQuery = MorphiaObject.datastore
+				.createQuery(Event.class).field("_id").equal(new ObjectId(eventId));
+		eventQuery.or(
+				eventQuery.criteria("owner").equal(currentUser),
+				eventQuery.criteria("isPublic").equal(true)
+		);
+		
+		Event event = eventQuery.get();
+		
+		if (event == null) {
+			return badRequest();
+		} else if (!event.inviteUser(user)) {
+			return badRequest();
+		} else {
+			UpdateOperations<Event> eventOps = MorphiaObject.datastore
+					.createUpdateOperations(Event.class)
+					.set("invitedUsers", event.getInvitedUsers());
+			MorphiaObject.datastore.update(eventQuery, eventOps);
+			
+			return ok();
 		}
 	}
 

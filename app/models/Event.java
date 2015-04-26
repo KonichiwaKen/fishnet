@@ -28,8 +28,21 @@ public class Event {
 		declinedUsers = new ArrayList<String>();
 	}
 	
-	public void setOwner (String owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
+	}
+	
+	public List<String> getInvitedUsers() {
+		return invitedUsers;
+	}
+
+	public boolean inviteUser(String user) {
+		if (invitedUsers.contains(user) || acceptedUsers.contains(user) || declinedUsers.contains(user)) {
+			return false;
+		} else {
+			invitedUsers.add(user);
+			return true;
+		}
 	}
 	
 }

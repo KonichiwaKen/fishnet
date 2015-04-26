@@ -3,8 +3,6 @@ package models;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 @Entity("Users")
 public class User {
 
