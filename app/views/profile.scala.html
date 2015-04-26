@@ -12,6 +12,7 @@
     <script src="@routes.Assets.at("javascripts/profileApp.js")" type="text/javascript"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/637a3865f1/UntitledProject/style.css">
   </head>
 
   <nav class="navbar navbar-default">
@@ -143,6 +144,7 @@
                 </div>
               </div></br></br>
             </div>
+            <div ng-hide="eventsHosting.length"> <div align= "center"><b>No events  <span class="icon-sad2"></span></b></div></div>
           </div>
         </div>
 
@@ -193,6 +195,7 @@
                 </div>
               </div></br></br>
             </div>
+            <div ng-hide="eventsAttending.length"><div align= "center"><b>No events  <span class="icon-sad2"></span></b></div></div>
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@
     <script src="@routes.Assets.at("javascripts/homeApp.js")" type="text/javascript"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/637a3865f1/UntitledProject/style.css">
   </head>
 
   <nav class="navbar navbar-default">
@@ -55,7 +56,6 @@
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
         <div ng-repeat="event in events | orderBy:'startTime'">
           <div class="panel panel-primary">
-
             <a data-toggle="collapse" data-parent="#accordion" href="#{{event.id}}" aria-expanded="false" aria-controls="{{event.id}}">
               <div class="panel-heading" role="tab" id="Events">
                   <h2 class="panel-title">
@@ -97,6 +97,7 @@
           </div>
           </br></br>
         </div>
+        <div ng-hide="eventsHosting.length"> <div align= "center"><b>No events  <span class="icon-sad2"></span></b></div></div>
       </div>
     </div>
 
